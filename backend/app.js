@@ -11,9 +11,10 @@ const calculatorRoutes = require("./src/routes/calculator.routes");
 const app = express();
 
 app.use(helmet());
+const allowedOrigin = (process.env.CLIENT_URL || "http://localhost:5173").replace(/\/$/, "");
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: allowedOrigin,
     credentials: true,
   })
 );
