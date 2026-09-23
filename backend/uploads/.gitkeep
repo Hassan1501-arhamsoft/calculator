@@ -1,0 +1,3 @@
+# Reserved for uploaded files (e.g. exported graph images), matching the
+# reference project's top-level uploads/ folder. Not used by the
+# calculator yet — it has no file-upload endpoints.
