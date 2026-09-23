@@ -1,38 +1,52 @@
-/* Calculator Suite — design tokens
-   A precision-instrument feel: dark casing, mono display, one signal-blue
-   accent for primary actions and one warm amber for secondary/scientific
-   functions — echoing the two-tone keys on physical scientific calculators. */
+/* Calculator Suite — Obsidian & Lava Theme
+   A professional 3D dark-stone casing with molten orange/red accents. 
+   Keys simulate dark basalt rock that heat up on hover and burst 
+   with fiery energy on click. */
 
 .calc-suite {
-  --bg-void: #14151a;
-  --panel: #1e2027;
-  --panel-raised: #262933;
-  --key: #2b2e38;
-  --key-hover: #33374280;
-  --border: #33364066;
-  --text-primary: #edeef2;
-  --text-muted: #8b909c;
-  --accent-signal: #5b9dff;
-  --accent-signal-dim: #5b9dff26;
-  --accent-warm: #f2a65a;
-  --accent-warm-dim: #f2a65a22;
-  --danger: #ff6b6b;
+  /* Lava Theme Variables */
+  --bg-void: #0a0909; /* Deep volcanic background */
+  --panel: #141110; /* Dark basalt panel */
+  --panel-raised: #1c1615;
+  --key: #221c1a; /* Obsidian keys */
+  --key-hover: #3b241c; /* Heating up */
+  --border: #3d2822; /* Subtle warm border */
+  --text-primary: #fff0e6; /* Heat-white text */
+  --text-muted: #8c7168; /* Ash grey */
+  --accent-signal: #ff5500; /* Molten Lava Orange */
+  --accent-signal-dim: rgba(255, 85, 0, 0.15);
+  --accent-warm: #ffaa00; /* Magma Yellow */
+  --accent-warm-dim: rgba(255, 170, 0, 0.15);
+  --danger: #ff2a2a; /* Pure heat red */
 
   --font-display: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
   --font-ui: "Inter", system-ui, -apple-system, sans-serif;
 
   background: var(--bg-void);
+  background-image: radial-gradient(circle at 50% -20%, #ff550015 0%, transparent 60%);
   color: var(--text-primary);
   font-family: var(--font-ui);
   border-radius: 18px;
   padding: 20px;
   max-width: 520px;
   margin: 0 auto;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 60px rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--border);
+  box-shadow: 
+    0 1px 0 rgba(255, 150, 100, 0.08) inset, 
+    0 20px 60px rgba(0, 0, 0, 0.8),
+    0 0 80px rgba(255, 85, 0, 0.05); /* Outer ambient glow */
 }
 
 .calc-suite * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Hide default number input spinners if any are used in the display */
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }
 
 .calc-suite__header {
@@ -46,6 +60,7 @@
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.01em;
+  color: var(--text-primary);
 }
 
 .calc-suite__history-toggle {
@@ -57,15 +72,15 @@
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 6px;
+  transition: all 0.2s;
 }
 .calc-suite__history-toggle:hover,
 .calc-suite__history-toggle:focus-visible {
-  color: var(--text-primary);
+  color: var(--accent-warm);
   background: var(--key-hover);
 }
 
-/* Mode tabs — a working control, not decoration, so an underline marks
-   the active one rather than a pill/card treatment. */
+/* Mode tabs */
 .calc-tabs {
   display: flex;
   gap: 18px;
@@ -83,6 +98,7 @@
   cursor: pointer;
   border-bottom: 2px solid transparent;
   white-space: nowrap;
+  transition: all 0.2s;
 }
 .calc-tabs__item:hover {
   color: var(--text-primary);
@@ -90,6 +106,7 @@
 .calc-tabs__item[aria-selected="true"] {
   color: var(--text-primary);
   border-bottom-color: var(--accent-signal);
+  text-shadow: 0 0 10px rgba(255, 85, 0, 0.4);
 }
 .calc-tabs__item:focus-visible {
   outline: 2px solid var(--accent-signal);
@@ -108,6 +125,8 @@
   flex-direction: column;
   justify-content: flex-end;
   gap: 6px;
+  border: 1px solid var(--panel-raised);
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
 }
 .calc-display__trail {
   font-family: var(--font-display);
@@ -122,6 +141,8 @@
   line-height: 1.1;
   overflow-x: auto;
   white-space: nowrap;
+  color: #fffaf0;
+  text-shadow: 0 0 8px rgba(255, 170, 0, 0.3);
 }
 .calc-display__value--error {
   color: var(--danger);
@@ -140,24 +161,56 @@
   font-size: 16px;
   color: var(--text-primary);
   background: var(--key);
-  border: none;
+  border: 1px solid #332724;
   border-radius: 10px;
   padding: 14px 0;
   cursor: pointer;
-  transition: background 120ms ease, transform 60ms ease;
+  position: relative;
+  overflow: hidden; /* Contains the fire burst */
+  transition: all 120ms ease;
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.03);
 }
 .calc-key:hover {
   background: var(--key-hover);
+  border-color: #593527;
+  color: #ffffff;
 }
 .calc-key:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
 }
 .calc-key:focus-visible {
   outline: 2px solid var(--accent-signal);
   outline-offset: 1px;
 }
+
+/* Fire Burst Animation on Click */
+.calc-key::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255,170,0,0.8) 0%, rgba(255,85,0,0) 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: width 0.3s ease-out, height 0.3s ease-out, opacity 0.5s ease-out;
+}
+.calc-key:active::after {
+  width: 120px;
+  height: 120px;
+  opacity: 1;
+  transition: 0s;
+}
+
+/* Operator Keys */
 .calc-key--op {
   color: var(--accent-signal);
+  font-weight: 600;
 }
 .calc-key--fn {
   color: var(--accent-warm);
@@ -165,12 +218,18 @@
   font-size: 13px;
 }
 .calc-key--equals {
-  background: var(--accent-signal);
-  color: #0d1420;
+  background: linear-gradient(135deg, #ff5500 0%, #cc3300 100%);
+  color: #fff;
   font-weight: 600;
+  border: none;
+  box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
 }
 .calc-key--equals:hover {
-  background: #74acff;
+  background: linear-gradient(135deg, #ff7733 0%, #e64000 100%);
+  box-shadow: 0 6px 20px rgba(255, 85, 0, 0.5);
+}
+.calc-key--equals:active::after {
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
 }
 .calc-key--clear {
   color: var(--danger);
@@ -182,7 +241,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .calc-key {
+  .calc-key, .calc-key::after {
     transition: none;
   }
 }
@@ -209,6 +268,7 @@
   font-size: 14px;
   border-radius: 8px;
   padding: 8px 10px;
+  transition: all 0.2s;
 }
 .calc-select {
   font-family: var(--font-ui);
@@ -216,6 +276,7 @@
 .calc-input:focus-visible,
 .calc-select:focus-visible {
   outline: 2px solid var(--accent-signal);
+  border-color: var(--accent-signal);
 }
 
 .calc-matrix-grid {
@@ -238,10 +299,12 @@
   padding: 9px 16px;
   cursor: pointer;
   background: var(--accent-signal);
-  color: #0d1420;
+  color: #fff;
+  transition: all 0.2s;
 }
 .calc-btn:hover {
-  background: #74acff;
+  background: #ff7733;
+  box-shadow: 0 4px 12px rgba(255, 85, 0, 0.3);
 }
 .calc-btn--ghost {
   background: transparent;
@@ -251,6 +314,7 @@
 }
 .calc-btn--ghost:hover {
   background: var(--key-hover);
+  border-color: var(--text-muted);
 }
 
 .calc-result-box {
@@ -263,6 +327,7 @@
   word-break: break-word;
   margin-top: 10px;
   min-height: 20px;
+  border: 1px solid var(--panel-raised);
 }
 .calc-error-text {
   color: var(--danger);
@@ -277,6 +342,7 @@
   background: var(--panel);
   border-radius: 10px;
   display: block;
+  border: 1px solid var(--border);
 }
 
 /* History slide-out */
@@ -287,6 +353,7 @@
   margin-top: 14px;
   max-height: 260px;
   overflow-y: auto;
+  border: 1px solid var(--panel-raised);
 }
 .calc-history__item {
   display: flex;
@@ -320,6 +387,7 @@
   font-size: 12px;
   cursor: pointer;
   margin-top: 6px;
+  transition: color 0.2s;
 }
 .calc-history__clear:hover {
   color: var(--danger);
