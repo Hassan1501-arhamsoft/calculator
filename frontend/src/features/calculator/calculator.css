@@ -1,40 +1,71 @@
-/* Calculator Suite — Obsidian & Lava Theme
-   A professional 3D dark-stone casing with molten orange/red accents. 
-   Keys simulate dark basalt rock that heat up on hover and burst 
-   with fiery energy on click. */
+/* Calculator Suite — "Devil's Core" Lava Theme
+   A horror-inspired, sinister 3D design. Features flowing magma 
+   animations, glowing internal lava lighting in the display, 
+   keys that resemble burning coals, and cursed inputs. */
+
+@keyframes lava-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes flicker-glow {
+  0%, 100% { opacity: 1; text-shadow: 0 0 10px #ff2a00, 0 0 20px #ff0000; }
+  50% { opacity: 0.9; text-shadow: 0 0 15px #ff4400, 0 0 30px #ff2a00, 0 0 40px #cc0000; }
+}
+
+@keyframes devil-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 10px #ffea00, 0 0 20px #ff2a00, 0 0 40px #990000;
+  }
+  20%, 24%, 55% {
+    opacity: 0.6;
+    text-shadow: 0 0 5px #ff2a00, 0 0 10px #990000;
+  }
+}
+
+@keyframes creepy-roam {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+  33% { transform: translate(15%, 20%) scale(1.3); opacity: 0.6; }
+  66% { transform: translate(-15%, 10%) scale(0.9); opacity: 0.4; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+}
 
 .calc-suite {
-  /* Lava Theme Variables */
-  --bg-void: #0a0909; /* Deep volcanic background */
-  --panel: #141110; /* Dark basalt panel */
-  --panel-raised: #1c1615;
-  --key: #221c1a; /* Obsidian keys */
-  --key-hover: #3b241c; /* Heating up */
-  --border: #3d2822; /* Subtle warm border */
-  --text-primary: #fff0e6; /* Heat-white text */
-  --text-muted: #8c7168; /* Ash grey */
-  --accent-signal: #ff5500; /* Molten Lava Orange */
-  --accent-signal-dim: rgba(255, 85, 0, 0.15);
-  --accent-warm: #ffaa00; /* Magma Yellow */
-  --accent-warm-dim: rgba(255, 170, 0, 0.15);
-  --danger: #ff2a2a; /* Pure heat red */
+  /* Devil / Lava Variables */
+  --bg-void: #070000; /* Pitch black with a hint of blood */
+  --panel: #110202; /* Charred coal */
+  --panel-raised: #1a0505;
+  --key: #140505; /* Cold ember */
+  --key-hover: #2b0808; /* Heating up */
+  --border: #330000; /* Deep crimson border */
+  --text-primary: #ffdac2; /* Pale fire */
+  --text-muted: #884444; /* Dried blood / ash */
+  --accent-signal: #ff2a00; /* Hellfire red */
+  --accent-signal-dim: rgba(255, 42, 0, 0.15);
+  --accent-warm: #ff8800; /* Magma core */
+  --danger: #ff0000; /* Pure destruction */
 
   --font-display: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
   --font-ui: "Inter", system-ui, -apple-system, sans-serif;
 
-  background: var(--bg-void);
-  background-image: radial-gradient(circle at 50% -20%, #ff550015 0%, transparent 60%);
+  /* Flowing Lava Background Animation */
+  background: linear-gradient(-45deg, #0a0000, #1a0303, #0f0000, #220000);
+  background-size: 400% 400%;
+  animation: lava-flow 12s ease infinite;
+  
   color: var(--text-primary);
   font-family: var(--font-ui);
   border-radius: 18px;
   padding: 20px;
   max-width: 520px;
   margin: 0 auto;
-  border: 1px solid var(--border);
+  border: 1px solid #440000;
   box-shadow: 
-    0 1px 0 rgba(255, 150, 100, 0.08) inset, 
-    0 20px 60px rgba(0, 0, 0, 0.8),
-    0 0 80px rgba(255, 85, 0, 0.05); /* Outer ambient glow */
+    0 1px 0 rgba(255, 50, 0, 0.2) inset, 
+    0 20px 60px rgba(0, 0, 0, 0.9),
+    0 0 100px rgba(255, 0, 0, 0.15); /* Ominous outer red glow */
 }
 
 .calc-suite * {
@@ -42,7 +73,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Hide default number input spinners if any are used in the display */
+/* Hide default number input spinners */
 input[type="number"]::-webkit-inner-spin-button, 
 input[type="number"]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
@@ -58,9 +89,11 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .calc-suite__title {
   font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--accent-signal);
+  text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+  text-transform: uppercase;
 }
 
 .calc-suite__history-toggle {
@@ -72,12 +105,13 @@ input[type="number"]::-webkit-outer-spin-button {
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 6px;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
 }
 .calc-suite__history-toggle:hover,
 .calc-suite__history-toggle:focus-visible {
   color: var(--accent-warm);
   background: var(--key-hover);
+  box-shadow: 0 0 10px rgba(255, 42, 0, 0.3);
 }
 
 /* Mode tabs */
@@ -98,24 +132,29 @@ input[type="number"]::-webkit-outer-spin-button {
   cursor: pointer;
   border-bottom: 2px solid transparent;
   white-space: nowrap;
-  transition: all 0.2s;
+  transition: all 0.3s;
 }
 .calc-tabs__item:hover {
   color: var(--text-primary);
+  text-shadow: 0 0 5px var(--accent-signal);
 }
 .calc-tabs__item[aria-selected="true"] {
-  color: var(--text-primary);
+  color: #ffffff;
   border-bottom-color: var(--accent-signal);
-  text-shadow: 0 0 10px rgba(255, 85, 0, 0.4);
+  text-shadow: 0 0 12px var(--accent-signal);
 }
 .calc-tabs__item:focus-visible {
   outline: 2px solid var(--accent-signal);
   outline-offset: 2px;
 }
 
-/* Display */
+/* Display - Deep Haunted Lava Pit */
 .calc-display {
-  background: var(--panel);
+  /* Deep, boiling blood pool gradient */
+  background: linear-gradient(135deg, #050000 0%, #150000 40%, #220000 60%, #050000 100%);
+  background-size: 300% 300%;
+  animation: lava-flow 6s infinite alternate;
+  
   border-radius: 12px;
   padding: 18px 16px 14px;
   margin-bottom: 14px;
@@ -125,29 +164,65 @@ input[type="number"]::-webkit-outer-spin-button {
   flex-direction: column;
   justify-content: flex-end;
   gap: 6px;
-  border: 1px solid var(--panel-raised);
-  box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+  
+  position: relative;
+  overflow: hidden; /* Contains the roaming light */
+  border: 1px solid #660000;
+  
+  /* Intense inner pit darkness + ominous outer halo */
+  box-shadow: 
+    inset 0 0 40px #000000, 
+    inset 0 0 15px rgba(255, 0, 0, 0.4),
+    0 10px 20px rgba(0, 0, 0, 0.9),
+    0 0 25px rgba(255, 0, 0, 0.15);
 }
+
+/* The creepy roaming light passing underneath the glass */
+.calc-display::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(255, 42, 0, 0.25) 0%, transparent 35%);
+  animation: creepy-roam 10s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .calc-display__trail {
   font-family: var(--font-display);
   font-size: 13px;
-  color: var(--text-muted);
+  color: #ff6600;
+  opacity: 0.7;
   overflow-x: auto;
   white-space: nowrap;
+  position: relative;
+  z-index: 1; /* Keeps text above the roaming light */
 }
+
 .calc-display__value {
   font-family: var(--font-display);
-  font-size: 32px;
+  font-size: 36px;
+  font-weight: 700;
   line-height: 1.1;
   overflow-x: auto;
   white-space: nowrap;
-  color: #fffaf0;
-  text-shadow: 0 0 8px rgba(255, 170, 0, 0.3);
+  color: #fffaf0; /* Blinding white-hot core */
+  animation: devil-flicker 4s infinite;
+  position: relative;
+  z-index: 1;
 }
+
 .calc-display__value--error {
   color: var(--danger);
-  font-size: 16px;
+  font-size: 17px;
+  font-weight: 700;
   font-family: var(--font-ui);
+  text-shadow: 0 0 15px #ff0000, 0 0 30px #990000;
+  position: relative;
+  z-index: 1;
 }
 
 /* Keypad */
@@ -161,32 +236,35 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 16px;
   color: var(--text-primary);
   background: var(--key);
-  border: 1px solid #332724;
+  border: 1px solid #2a0a0a;
   border-radius: 10px;
   padding: 14px 0;
   cursor: pointer;
   position: relative;
-  overflow: hidden; /* Contains the fire burst */
-  transition: all 120ms ease;
+  overflow: hidden; 
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 
-    0 2px 4px rgba(0,0,0,0.4),
-    inset 0 1px 1px rgba(255, 255, 255, 0.03);
+    0 4px 6px rgba(0,0,0,0.6),
+    inset 0 1px 1px rgba(255, 100, 100, 0.05);
 }
 .calc-key:hover {
   background: var(--key-hover);
-  border-color: #593527;
+  border-color: var(--accent-signal);
   color: #ffffff;
+  box-shadow: 
+    0 2px 8px rgba(255, 42, 0, 0.4),
+    inset 0 1px 5px rgba(255, 0, 0, 0.2);
 }
 .calc-key:active {
-  transform: scale(0.96);
-  box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
+  transform: scale(0.95) translateY(2px);
+  box-shadow: inset 0 2px 15px rgba(0,0,0,0.8);
 }
 .calc-key:focus-visible {
   outline: 2px solid var(--accent-signal);
   outline-offset: 1px;
 }
 
-/* Fire Burst Animation on Click */
+/* Hellfire Burst Animation on Click */
 .calc-key::after {
   content: "";
   position: absolute;
@@ -194,15 +272,16 @@ input[type="number"]::-webkit-outer-spin-button {
   left: 50%;
   width: 0;
   height: 0;
-  background: radial-gradient(circle, rgba(255,170,0,0.8) 0%, rgba(255,85,0,0) 70%);
+  background: radial-gradient(circle, rgba(255,200,100,0.9) 0%, rgba(255,0,0,0.6) 40%, transparent 70%);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: width 0.3s ease-out, height 0.3s ease-out, opacity 0.5s ease-out;
+  pointer-events: none;
 }
 .calc-key:active::after {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   opacity: 1;
   transition: 0s;
 }
@@ -210,7 +289,8 @@ input[type="number"]::-webkit-outer-spin-button {
 /* Operator Keys */
 .calc-key--op {
   color: var(--accent-signal);
-  font-weight: 600;
+  font-weight: 700;
+  background: #1a0303;
 }
 .calc-key--fn {
   color: var(--accent-warm);
@@ -218,31 +298,36 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 13px;
 }
 .calc-key--equals {
-  background: linear-gradient(135deg, #ff5500 0%, #cc3300 100%);
+  /* Pure molten lava gradient */
+  background: linear-gradient(135deg, #cc0000 0%, #ff5500 50%, #ffaa00 100%);
+  background-size: 200% 200%;
+  animation: lava-flow 3s ease infinite;
   color: #fff;
-  font-weight: 600;
-  border: none;
-  box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
+  font-weight: 800;
+  border: 1px solid #ffaa00;
+  box-shadow: 0 0 20px rgba(255, 42, 0, 0.5);
 }
 .calc-key--equals:hover {
-  background: linear-gradient(135deg, #ff7733 0%, #e64000 100%);
-  box-shadow: 0 6px 20px rgba(255, 85, 0, 0.5);
+  box-shadow: 0 0 30px rgba(255, 85, 0, 0.8);
+  transform: scale(1.02);
 }
 .calc-key--equals:active::after {
-  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+  background: radial-gradient(circle, #ffffff 0%, rgba(255,255,255,0) 70%);
 }
 .calc-key--clear {
   color: var(--danger);
   font-family: var(--font-ui);
   font-size: 13px;
+  font-weight: 700;
 }
 .calc-key--wide {
   grid-column: span 2;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .calc-key, .calc-key::after {
-    transition: none;
+  .calc-suite, .calc-display, .calc-key, .calc-key::after, .calc-display__value, .calc-display::before {
+    transition: none !important;
+    animation: none !important;
   }
 }
 
@@ -259,24 +344,43 @@ input[type="number"]::-webkit-outer-spin-button {
   color: var(--text-muted);
   min-width: 64px;
 }
+
+/* Charred inputs that flare up like breathing fire on focus */
 .calc-input,
 .calc-select {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  color: var(--text-primary);
+  background: #0a0101; /* Scorched earth */
+  border: 1px solid #440000;
+  color: #ffaa00; /* Magma text */
   font-family: var(--font-display);
+  font-weight: 600;
   font-size: 14px;
   border-radius: 8px;
-  padding: 8px 10px;
-  transition: all 0.2s;
+  padding: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    inset 0 2px 10px rgba(0,0,0,0.9), 
+    inset 0 0 5px rgba(255, 0, 0, 0.1);
 }
 .calc-select {
   font-family: var(--font-ui);
 }
+.calc-input:hover,
+.calc-select:hover {
+  border-color: #ff2a00;
+  box-shadow: 
+    inset 0 2px 10px rgba(0,0,0,0.9), 
+    inset 0 0 10px rgba(255, 42, 0, 0.3);
+}
 .calc-input:focus-visible,
 .calc-select:focus-visible {
-  outline: 2px solid var(--accent-signal);
-  border-color: var(--accent-signal);
+  outline: none;
+  background: #1a0202;
+  border-color: #ff5500;
+  color: #ffffff; /* Text gets white-hot */
+  text-shadow: 0 0 8px #ffaa00;
+  box-shadow: 
+    0 0 15px rgba(255, 42, 0, 0.6), 
+    inset 0 0 15px rgba(255, 85, 0, 0.4);
 }
 
 .calc-matrix-grid {
@@ -293,32 +397,35 @@ input[type="number"]::-webkit-outer-spin-button {
 .calc-btn {
   font-family: var(--font-ui);
   font-size: 13.5px;
-  font-weight: 600;
-  border: none;
+  font-weight: 700;
+  border: 1px solid #ff0000;
   border-radius: 9px;
   padding: 9px 16px;
   cursor: pointer;
-  background: var(--accent-signal);
+  background: linear-gradient(180deg, #aa0000 0%, #550000 100%);
   color: #fff;
-  transition: all 0.2s;
+  transition: all 0.3s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 .calc-btn:hover {
-  background: #ff7733;
-  box-shadow: 0 4px 12px rgba(255, 85, 0, 0.3);
+  background: linear-gradient(180deg, #ff2a00 0%, #aa0000 100%);
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
 }
 .calc-btn--ghost {
   background: transparent;
   border: 1px solid var(--border);
   color: var(--text-primary);
-  font-weight: 500;
+  font-weight: 600;
+  box-shadow: none;
 }
 .calc-btn--ghost:hover {
   background: var(--key-hover);
-  border-color: var(--text-muted);
+  border-color: var(--accent-signal);
+  color: #fff;
 }
 
 .calc-result-box {
-  background: var(--panel);
+  background: var(--panel-raised);
   border-radius: 10px;
   padding: 12px 14px;
   font-family: var(--font-display);
@@ -327,33 +434,37 @@ input[type="number"]::-webkit-outer-spin-button {
   word-break: break-word;
   margin-top: 10px;
   min-height: 20px;
-  border: 1px solid var(--panel-raised);
+  border: 1px solid var(--border);
+  color: var(--accent-warm);
 }
 .calc-error-text {
   color: var(--danger);
   font-size: 13px;
   margin-top: 8px;
+  font-weight: 600;
 }
 
 /* Graph */
 .calc-graph-canvas {
   width: 100%;
   height: 220px;
-  background: var(--panel);
+  background: #050000;
   border-radius: 10px;
   display: block;
   border: 1px solid var(--border);
+  box-shadow: inset 0 0 20px rgba(255, 0, 0, 0.1);
 }
 
 /* History slide-out */
 .calc-history {
-  background: var(--panel);
+  background: var(--panel-raised);
   border-radius: 12px;
   padding: 12px 14px;
   margin-top: 14px;
   max-height: 260px;
   overflow-y: auto;
-  border: 1px solid var(--panel-raised);
+  border: 1px solid var(--border);
+  box-shadow: inset 0 5px 15px rgba(0,0,0,0.8);
 }
 .calc-history__item {
   display: flex;
@@ -372,7 +483,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .calc-history__result {
   font-family: var(--font-display);
-  color: var(--text-primary);
+  color: var(--accent-warm);
 }
 .calc-history__empty {
   color: var(--text-muted);
@@ -387,8 +498,9 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 12px;
   cursor: pointer;
   margin-top: 6px;
-  transition: color 0.2s;
+  transition: all 0.3s;
 }
 .calc-history__clear:hover {
-  color: var(--danger);
+  color: var(--accent-signal);
+  text-shadow: 0 0 5px var(--accent-signal);
 }
